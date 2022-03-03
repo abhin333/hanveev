@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ATK BUILD MART | ADMIN - Log In</title>
+    <link rel="icon"href="/static/backend/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet"href="/static/backend/css/loginstyles.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Log In </h2>
+
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>
+            </div>
+
+            <!-- Login Form -->
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% if messages %}
+                    <div class="col-lg-12 color03 ">
+                        <!-- <ul class="messages align-content"> -->
+                            {% for message in messages %}
+                                <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+                            {% endfor %}
+                        <!-- </ul> -->
+                    </div>
+                {% endif %}
+                <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="#">sign Up</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
