@@ -1,4 +1,4 @@
-{% extends 'pages/base.html' %}
+{% extends 'backend/base.html' %}
 {% block title %}
     <title>Products</title>
 {% endblock %}
@@ -6,7 +6,7 @@
  <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
                 aria-label="breadcrumb">
                 <ol class="breadcrumb" style="justify-content: flex-end;">
-                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/homepage/">Dashboard</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Products</li>
                 </ol>
             </nav>
@@ -149,7 +149,7 @@
                                             </button>
                                 </div>
 
-                                   <form action="{% url 'upload' name='product' %}" method="post" enctype="multipart/form-data">
+                                   <form action="/productupload/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
                                        <div class="modal-body">
     <input type="file" name="myfile" class="form-control" >

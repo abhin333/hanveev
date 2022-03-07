@@ -1,4 +1,4 @@
-{% extends 'pages/base.html' %}
+{% extends 'backend/base.html' %}
 <!--{% load static %}-->
 {% block title %}
 <title>Admin Panel</title>{% endblock %}
@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'users' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/user/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">User</h6>
                                 <h2><i class="fa fa-user "></i></h2>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'brands' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/brands/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">Brand</h6>
                                 <h2><i class="fa fa-building" aria-hidden="true"></i></i></h2>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'category' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/category/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">Category</h6>
                                 <h2><i class="fa fa-tag" aria-hidden="true"></i></i></h2>
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'products' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/products/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">Products</h6>
                                 <h2><i class="fa fa-shopping-cart" aria-hidden="true"></i></i></h2>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'gallerys' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/gallery/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">Gallery</h6>
                                 <h2><i class="far fa-images" aria-hidden="true"></i></i></h2>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'contactus' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/contactus/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">Contact Us</h6>
                                 <h2><i class="fas fa-info" aria-hidden="true"></i></i></h2>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'getprice' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/getprice/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">Get A Price</h6>
                                 <h2><i class="fas fa-rupee-sign" aria-hidden="true"></i></i></h2>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-xl-3">
-                        <div class="card bg-c-blue order-card" onclick="location.href='{% url 'newsletter' %}';">
+                        <div class="card bg-c-blue order-card" onclick="location.href='/newsletter/';">
                             <div class="card-block text-center">
                                 <h6 class="m-b-20">News Letter</h6>
                                 <h2><i class="fas fa-newspaper" aria-hidden="true"></i></i></h2>

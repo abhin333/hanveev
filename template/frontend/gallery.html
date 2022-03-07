@@ -1,510 +1,200 @@
-{% extends 'pages/base.html' %}
-{% load static %}
+{% extends 'frontend/header.html' %} 
 {% block title %}
-<title>Gallery</title>
+<title>gallery | Hanveev - Kerala State Handloom Development Corporation Ltd.</title>
+<meta name="description" content="">
+<meta name="keywords" content="Hanveev, Kerala State Handloom Development Corporation Ltd.,">
+
 {% endblock %}
 {% block content %}
- <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
-                aria-label="breadcrumb">
-                <ol class="breadcrumb" style="justify-content: flex-end;">
-                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Gallery</li>
-                </ol>
-            </nav>
-            <div class="container input-container col-sm-8 col-12">
-                <h3>Gallery</h3>
-                <form action="{% url 'gallerys' %}" method="POST" enctype="multipart/form-data" class="boot-form column">
-                    {% csrf_token %}
-                    {% if messages %}
-                    <div class="col-lg-12 color03 ">
-                        <!-- <ul class="messages align-content"> -->
-                            {% for message in messages %}
-                                <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-                            {% endfor %}
-                        <!-- </ul> -->
-                    </div>
-                {% endif %}
-                 <div class="row">
-                    <div class="form-group col-6">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name">
-                    </div>
-                    <div class="form-group col-6">
-                        <label>Brands</label>
-                        <select class="form-select form-control" name="brand_name" id="id_brand_name">
-              <option disabled selected>Choose a option </option>
-                            {% for b in brands %}
-              <option value="{{b.brand_name}}">{{b.brand_name}}</option>
-              {% endfor %}
-            </select>
 
-                    </div>
-                </div>
-        <div class="form-group">
-          <label for="options">Gallery Type</label>
-            <select class="form-select form-control" name="gallery_type" id="gallery" required onchange="chagetxtbox()">
-              <option disabled selected>Choose a option </option>
-              <option value="Gallery">Gallery</option>
-              <option value="Latest Products">Latest Products </option>               
-            </select>
-        </div>
-                <script type="text/javascript">
-                  
-                  function chagetxtbox(){
-                
-                    v=document.getElementById('gallery').value;
-                    
-                    if (v=='Gallery'){
-                      document.getElementById('gallery1').style.display='block';
-                      document.getElementById('gallery2').style.display='block';
-                      document.getElementById('latest').style.display='none';
-                      document.getElementById('latest').removeAttribute("hidden");
-                      document.getElementById('gallery1').removeAttribute("hidden");
-                      document.getElementById('gallery2').removeAttribute("hidden"); 
-                    }
+        <!-- End Header top -->
 
-                    if (v=='Latest Products'){
-                        document.getElementById('latest').style.display='block';
-                        document.getElementById('gallery1').style.display='none';
-                        document.getElementById('gallery2').style.display='none';
-                        document.getElementById('latest').removeAttribute("hidden");
-                        document.getElementById('gallery1').removeAttribute("hidden");
-                        document.getElementById('gallery2').removeAttribute("hidden"); 
-                    }
-                    
-                  }
 
-                </script>
-                      <div class="form-group" id="gallery1" hidden>
-                        <label>Product Image For Gallery (470*330)</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="id_product_image1" name="product_image" >
-                            <label class="custom-file-label" for="id_product_image1">Choose file</label>
-                          </div>
+
+
+        <section class="blog-area blog-area-two pt-100 pb-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 col-lg-3 p-4-mb-4 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/2.jpg" alt="Blog">
+                            </a>
+                           
                         </div>
-                      <div class=" form-group" id="gallery2" hidden>
-                        <label for="name1">Details</label>
-                        <input type="text" class="form-control" id="name1" name="description">
-                      </div>
+                    </div>
 
 
-                      <div class="form-group" id="latest" hidden>
-                        <label>Product Image For Latest Product (370*270)</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="id_product_image2" name="product_image1" >
-                            <label class="custom-file-label" for="id_product_image2">Choose file</label>
-                          </div>
+                       <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/3.jpg"alt="Blog">
+                            </a>
+                           
                         </div>
+                    </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-            <div class="container table-container col-12">
-                <h3>Table</h3>
-                <div class="export-btn-group row">
-                    <button type="button" class="btn btn-primary export-btn mb-2" id="copy_btn">Copy</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2 "id="gg">CSV</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2" onclick="tableToExcel('table', 'W3C Example Table')">EXCEL</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2" id="btnExport">PDF</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2" onclick="myApps.printTables()">PRINT</button>
-                    <form class="table-search">
-                        <div class="input-group mb-2">
-                          <div class="input-group-prepend">
-                            <!-- <span class="input-group-text table-Search-btn">Search</span> -->
-                          </div>
-                          <!-- <input type="text" class="form-control"> -->
-                            <button type="button" class="btn btn-primary export-btn mb-2" data-toggle="modal" data-target="#exampleModal">Import</button>
 
+
+                      <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/6.jpg" alt="Blog">
+                            </a>
+                           
                         </div>
-                      </form>
-                </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Upload CSV File</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                            </button>
-                                </div>
+                    </div>
 
-                                   <form action="{% url 'upload' name='brand' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-                                       <div class="modal-body">
-    <input type="file" name="myfile" class="form-control" >
 
-                                </div>
-                            <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
 
+
+                    <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/5.jpg" alt="Blog">
+                            </a>
+                           
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/8.jpg" alt="Blog">
+                            </a>
+                           
+                        </div>
+                    </div>
+
+
+                       <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/3.jpg" alt="Blog">
+                            </a>
+                           
+                        </div>
+                    </div>
+
+
+
+                      <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/9.jpg" alt="Blog">
+                            </a>
+                           
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item ">
+                            <a href="#">
+                                <img src="/static/frontend/img/gallery/2.jpg" alt="Blog">
+                            </a>
+                           
+                        </div>
+                    </div>
+
+<!--                     <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/home-two/blog2.jpg" alt="Blog">
+                            </a>
+                            <span>21 Aug 2020</span>
+                            <div class="blog-inner">
+                                <h3>
+                                    <a href="#">Robotics Engineering: 10 Trends Shaping The Industrial Robotics</a>
+                                </h3>
+                                <a class="blog-link" href="#">
+                                    Read More
+                                    <i class='bx bx-plus'></i>
+                                </a>
                             </div>
-                            </form>
                         </div>
                     </div>
-                </div>
-                <div class="table-responsive" id="p">
-                <table class="table boot-table" id="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Si No</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Gallery Type</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Added By</th>
-                            <th scope="col">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {% for x in query %}
-                            <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.name}}</td>
-                            <td>{{x.brand_name}}</td>
-                            <td>{% if x.gallery %}<img src="{{x.gallery.url}}" width="25px" height="25px">{% elif x.latest_product %}<img src="{{x.latest_product.url}}" width="25px" height="25px">{% else%}None{% endif%}</td>
-
-                            <td>{{x.description}}</td>
-                            <td>{{x.gallery_type}}</td>
-                            <td>{{x.created_date}}</td>
-                            <td>{{x.created_by.username}}</td>                            
-                            <td><a href="{% url 'gallerydelete' %}?id={{x.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="11" class="text-center bg-warning">No Gallery created</td>
-
-                        </tr>
-                            {% endfor %}
-                        <!-- <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>  
-                {% if deleted %}                
-                <div class="container table-container col-12">
-                <div class="table-responsive">
-                <h3>Deleted Data</h3>
-                <div class="export-btn-group row">
-                    <button type="button" class="btn btn-primary export-btn mb-2" id="copy_btns">Copy</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2 " id="ggs">CSV</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2" onclick="tableToExcels('tab', 'W3C Example Table')">EXCEL</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2" id="btnExports">PDF</button>
-                    <button type="button" class="btn btn-primary export-btn mb-2" onclick="myApp.printTable()">PRINT</button>
-                    <!-- <form class="table-search">
-                        <div class="input-group mb-2">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text table-Search-btn">Search</span>
-                          </div>
-                          <input type="text" class="form-control">
+                    <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/home-two/blog3.jpg" alt="Blog">
+                            </a>
+                            <span>22 Aug 2020</span>
+                            <div class="blog-inner">
+                                <h3>
+                                    <a href="#">Know How The US Cuts Labor Adoption Of Industrial Robots</a>
+                                </h3>
+                                <a class="blog-link" href="#">
+                                    Read More
+                                    <i class='bx bx-plus'></i>
+                                </a>
+                            </div>
                         </div>
-                      </form> -->
+                    </div>
+                    <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/home-two/blog4.jpg" alt="Blog">
+                            </a>
+                            <span>23 Aug 2020</span>
+                            <div class="blog-inner">
+                                <h3>
+                                    <a href="#">Robots Are Being More Popular In The World</a>
+                                </h3>
+                                <a class="blog-link" href="#">
+                                    Read More
+                                    <i class='bx bx-plus'></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/home-two/blog5.jpg" alt="Blog">
+                            </a>
+                            <span>24 Aug 2020</span>
+                            <div class="blog-inner">
+                                <h3>
+                                    <a href="#">Nowadays All Countries Military Using Robot For Mission</a>
+                                </h3>
+                                <a class="blog-link" href="#">
+                                    Read More
+                                    <i class='bx bx-plus'></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3 p-4">
+                        <div class="blog-item">
+                            <a href="#">
+                                <img src="/static/frontend/img/home-two/blog6.jpg" alt="Blog">
+                            </a>
+                            <span>25 Aug 2020</span>
+                            <div class="blog-inner">
+                                <h3>
+                                    <a href="#">How Does Robot Works Like A Man In The Society</a>
+                                </h3>
+                                <a class="blog-link" href="#">
+                                    Read More
+                                    <i class='bx bx-plus'></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
-                <div class="table-responsive" id="ps">
-                <table class="table boot-table" id="tab">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Si No</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Brand</th>                            
-                            <th scope="col">Image</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Gallery Type</th>
-                            <th scope="col">Delete At</th>
-                        </tr>
-                    </thead>
-                    <tbody style="color: red">
-                        <tr>
-                            {% for x in deleted %}
-                            <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.name}}</td>
-                            <td>{{x.brand_name}}</td>
-                            <td>{% if x.gallery %} {{x.gallery.url}} {% else %} {{x.latest_product.url}} {% endif %}</td>   
-                            <td>{{x.description}}</td>
-                            <td>{{x.gallery_type}}</td>
-                            <td>{{x.deleted_at}}</td>                 
-
-                            
-                            <!-- <td>{{x.created_by.id}}</td> -->                            
-                            <!-- <td><a href="{% url 'brandupdate' %}?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                            <td><a href="{% url 'branddelete' %}?id={{x.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td> -->
-                        </tr>
-                            {% endfor %}
-                        <!-- <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr> -->
-                    </tbody>
-                </table>
-                {% else %}
-                {% endif %}
-
-                <script>    
-                $(document).ready(function(){
-                    $("li.custom-menu a.gallery").addClass("active");
-                    })
-                </script>
-                <script>
-                // Add the following code if you want the name of the file appear on select
-                $(".custom-file-input").on("change", function() {
-                  var fileName = $(this).val().split("\\").pop();
-                  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                });
-                </script>
-                 <script>
-                var myApps = new function () {
-                    this.printTables = function () {
-                        var table = document.getElementById('table');
-                        var win = window.open('', '', 'height=700,width=700');
-                        win.document.write(table.outerHTML);
-                        win.document.close();
-                        win.print();
-                        win.close();
-
-                    }
-                }
-                </script>
-                <script>
-                var myApp = new function () {
-                    this.printTable = function () {
-                        var tab = document.getElementById('tab');
-                        var win = window.open('', '', 'height=700,width=700');
-                        win.document.write(tab.outerHTML);
-                        win.document.close();
-                        win.print();
-                        win.close();
-
-                    }
-                }
-                </script>
+            </div>
+        </section>
 
 
-    <script type="text/javascript">
-        $("body").on("click", "#btnExport", function () {
-            html2canvas($('#table')[0], {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 500
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download("gallery-details.pdf");
-                }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $("body").on("click", "#btnExports", function () {
-            html2canvas($('#tab')[0], {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 500
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download("deleted-gallery-details.pdf");
-                }
-            });
-        });
-    </script>
 
-    <script type="text/javascript">
-                   function download_csv(csv, filename) {
-    var csvFile;
-    var downloadLink;
-
-    // CSV FILE
-    csvFile = new Blob([csv], {type: "text/csv"});
-
-    // Download link
-    downloadLink = document.createElement("a");
-
-    // File name
-    downloadLink.download = filename;
-
-    // We have to create a link to the file
-    downloadLink.href = window.URL.createObjectURL(csvFile);
-
-    // Make sure that the link is not displayed
-    downloadLink.style.display = "none";
-
-    // Add the link to your DOM
-    document.body.appendChild(downloadLink);
-
-    // Lanzamos
-    downloadLink.click();
-}
-
-function export_table_to_csv(html, filename) {
-    var csv = [];
-    var rows = document.querySelectorAll("#table tr");
-    
-    for (var i = 0; i < rows.length; i++) {
-        var row = [], cols = rows[i].querySelectorAll("td, th");
-        
-        for (var j = 0; j < cols.length; j++) 
-            row.push(cols[j].innerText);
-        
-        csv.push(row.join(","));        
-    }
-
-    // Download CSV
-    download_csv(csv.join("\n"), filename);
-}
-
-document.querySelector("#gg").addEventListener("click", function () {
-    var html = document.querySelector("#table").outerHTML;
-    export_table_to_csv(html, "gallery-details.csv");
-});
-
-                </script>
-                <script type="text/javascript">
-                   function download_csvs(csv, filename) {
-    var csvFile;
-    var downloadLink;
-
-    // CSV FILE
-    csvFile = new Blob([csv], {type: "text/csv"});
-
-    // Download link
-    downloadLink = document.createElement("a");
-
-    // File name
-    downloadLink.download = filename;
-
-    // We have to create a link to the file
-    downloadLink.href = window.URL.createObjectURL(csvFile);
-
-    // Make sure that the link is not displayed
-    downloadLink.style.display = "none";
-
-    // Add the link to your DOM
-    document.body.appendChild(downloadLink);
-
-    // Lanzamos
-    downloadLink.click();
-}
-
-function export_table_to_csvs(html, filename) {
-    var csv = [];
-    var rows = document.querySelectorAll("#tab tr");
-    
-    for (var i = 0; i < rows.length; i++) {
-        var row = [], cols = rows[i].querySelectorAll("td, th");
-        
-        for (var j = 0; j < cols.length; j++) 
-            row.push(cols[j].innerText);
-        
-        csv.push(row.join(","));        
-    }
-
-    // Download CSV
-    download_csvs(csv.join("\n"), filename);
-}
-
-document.querySelector("#ggs").addEventListener("click", function () {
-    var html = document.querySelector("#tab").outerHTML;
-    export_table_to_csvs(html, "deleted-gallery-details.csv");
-});
-
-                </script>
-
-                <script type="text/javascript">
-                     var tableToExcel = (function() {
-                      var uri = 'data:application/vnd.ms-excel;base64,'
-                        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-                        , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-                        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-                      return function(table, name) {
-                        if (!table.nodeType) table = document.getElementById(table)
-                        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-                        window.location.href = uri + base64(format(template, ctx))
-                      }
-                    })()
-                </script>
-                <script type="text/javascript">
-                     var tableToExcels = (function() {
-                      var uri = 'data:application/vnd.ms-excel;base64,'
-                        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-                        , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-                        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-                      return function(table, name) {
-                        if (!table.nodeType) table = document.getElementById(table)
-                        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-                        window.location.href = uri + base64(format(template, ctx))
-                      }
-                    })()
-                </script>
-
-                <script type="text/javascript">
-                    var copyBtn = document.querySelector('#copy_btn');
-copyBtn.addEventListener('click', function () {
-  var urlField = document.querySelector('#table');
-   
-  // create a Range object
-  var range = document.createRange();  
-  // set the Node to select the "range"
-  range.selectNode(urlField);
-  // add the Range to the set of window selections
-  window.getSelection().addRange(range);
-   
-  // execute 'copy', can't 'cut' in this case
-  document.execCommand('copy');
-}, false);
-                </script>
-                <script type="text/javascript">
-                    var copyBtns = document.querySelector('#copy_btns');
-copyBtns.addEventListener('click', function () {
-  var urlField = document.querySelector('#tab');
-   
-  // create a Range object
-  var range = document.createRange();  
-  // set the Node to select the "range"
-  range.selectNode(urlField);
-  // add the Range to the set of window selections
-  window.getSelection().addRange(range);
-   
-  // execute 'copy', can't 'cut' in this case
-  document.execCommand('copy');
-}, false);
-                </script>
+       {% endblock %}
 
 
-                <script type="text/javascript">
-                    $(document).ready( function () {
-                    $('#table').DataTable();
-                } );
-                </script>
 
-                <script type="text/javascript">
-                    $(document).ready( function () {
-                    $('#tab').DataTable();
-                } );
-                </script>
-{% endblock %}
+

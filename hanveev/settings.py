@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-dt%b(jkv^(^u4a-lq&a$wui#(jk%!+wbs@zk@iqi*f$&1h@(nn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,14 +76,22 @@ WSGI_APPLICATION = 'hanveev.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hanveev_db',
-        'USER':'root',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR/'db.sqlite3',
+        
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hanveev_db',
+#         'USER':'root',
+#         'PASSWORD':'',
+#         'HOST':'localhost',
+#         'PORT':'3306',
+#     }
+# }
 
 
 # Password validation
