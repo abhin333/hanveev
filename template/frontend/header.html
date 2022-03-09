@@ -21,7 +21,16 @@
     <!-- Responsive css -->
     <link rel="stylesheet"href="/static/frontend/css/responsive.css">
     
+     <!-- google translator -->
+    
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: "", includedLanguages : 'hi,ml,en'}, 'google_translate_element');
+      }
+    </script>
 </head>
+
 
 <body>
     <!--[if lte IE 9]>
@@ -53,6 +62,25 @@
                         <div class="top-bar-right text-end">
                             <div class="ltn__top-bar-menu">
                                 <ul>
+<style>
+    body{
+        margin-top: 20px;
+    }
+    .goog-te-banner-frame.skiptranslate {
+    display: none !important;}
+    .goog-logo-link {
+   display:none;
+
+   } 
+
+.goog-te-gadget{
+   color: transparent !important;
+}
+    } 
+body {
+    top: 0px !important; 
+    }
+</style>
                                     <li>
                                         <!-- ltn__language-menu -->
                                         <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
@@ -65,7 +93,10 @@
                                                         <li><a href="#">English</a></li>
                                                         <li><a href="#">Malayalam</a></li>
                                                         <li><a href="#">Hindi</a></li>
+                                                        
                                                     </ul>
+<div id="google_translate_element" ></div>
+<li></li>
                                                 </li>
                                             </ul>
                                         </div>
@@ -146,8 +177,8 @@
                                         <li class="menu-icon"><a href="/ga/">Gallery</a></li>
 
                                         <li class="menu-icon"><a href="#">RTI</a></li>
-                                        <li class="menu-icon"><a href="#">Tenders</a></li>
-                                        <li class="menu-icon"><a href="#">Careers</a></li>
+                                        <li class="menu-icon"><a href="/tender_view/">Tenders</a></li>
+                                        <li class="menu-icon"><a href="/career_view/">Careers</a></li>
 
                                        
                                         <li class="menu-icon"><a href="/contact/">Contact</a></li>
@@ -282,18 +313,18 @@
                     </li>
                     <li><a href="#">About</a>
                         <ul class="sub-menu">
-                            <li><a href="#">About Us</a></li>
+                            <li><a href="/about/">About Us</a></li>
                             <li><a href="#">Services</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Offices</a>
                         
                     </li>
-                    <li><a href="#">Gallery</a></li>
+                    <li><a href="/gallery/">Gallery</a></li>
 
                     <li><a href="#">RTI</a></li>
-                    <li><a href="#">Tenders</a></li>
-                    <li><a href="#">Careers</a></li>
+                    <li><a href="/tender_view/">Tenders</a></li>
+                    <li><a href="/career_view/">Careers</a></li>
                     
                     <li><a href="/contact/">Contact</a></li>
                 </ul>
@@ -501,6 +532,11 @@ P.M 32/249, Thilleri Road, Kannur 670 001, Kerala State, India.</a></p>
         </div>
     </div>
     <!-- preloader area end -->
+   
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
 
     <!-- All JS Plugins -->
     <script src="/static/frontend/js/plugins.js"></script>

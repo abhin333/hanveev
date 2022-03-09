@@ -1,47 +1,24 @@
 {% extends 'backend/base.html' %}
 {% block title %}
-<title>Category</title>
+<title>News Lines</title>
 {% endblock %}
 {% block content %} {% load static %}
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
                 aria-label="breadcrumb">
                 <ol class="breadcrumb" style="justify-content: flex-end;">
                     <li class="breadcrumb-item"><a href="/homepage/">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Category</li>
+                    <li class="breadcrumb-item active" aria-current="page">News Lines</li>
                 </ol>
             </nav>
             <div class="container input-container col-sm-8 col-12">
-                <h3>Category</h3>
-                <form action="" method="POST" enctype="multipart/form-data" class="boot-form column">                    {% csrf_token %}
-                    {% if messages %}
-                    <div class="col-lg-12 color03 ">
-                        <!-- <ul class="messages align-content"> -->
-                            {% for message in messages %}
-                                <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-                            {% endfor %}
-                        <!-- </ul> -->
-                    </div>
-                {% endif %}
-<!--                    <div class="form-group">-->
-<!--                        <label for="catagory">Category Name</label>-->
-<!--                        <input type="text" class="form-control" id="category" name="categoryname">-->
-<!--                    </div>-->
+                <h3>News Lines</h3>
+                <form action="/news/" method="POST" enctype="multipart/form-data" class="boot-form column">                    {% csrf_token %}                
                 <div class="row">
 
                     <div class="form-group col-6" >
-                        <label for="name">Category Name</label>
-<!--                        <input type="text" class="form-control" id="name" name="category_name">-->
-                        {{form.category_name}}
-                        <p  style="color: red;">{{form.category_name.errors.as_text}}</p>
+                        <label for="name">Add new</label>
+                        <input type="text" class="form-control" id="addnews" name="addnews">
 
-                    </div>
-                    <div class="form-group col-6">
-                        <label>Category Image (370*270)</label>
-                        <div class="custom-file">
-<!--{{form.product_image.url}}-->
-                            <input type="file" class="custom-file-input" id="id_category_image" name="category_image" >
-                            <label class="custom-file-label" for="id_category_image">Choose file</label>
-                          </div>
                     </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -106,7 +83,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Si No</th>
-                            <th scope="col">Category</th>
+                            <th scope="col">News Line</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -115,13 +92,13 @@
                         <tr>
                             {% for x in query %}
                             <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.category_name}}</td>
+                            <td>{{x.description}}</td>
                             <td><a href="/categoryupdate/?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                            <td><a href="/categorydelete/?id={{x.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td><a href="/newsdelete/?id={{x.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="11" class="text-center bg-warning">No Category  created</td>
+                            <td colspan="11" class="text-center bg-warning">No News Lines  created</td>
 
                         </tr>
                             {% endfor %}
@@ -164,7 +141,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Si No</th>
-                            <th scope="col">Category</th>
+                            <th scope="col">News Line</th>
                             <th scope="col">Delete By</th>
                         </tr>
                     </thead>
@@ -172,7 +149,7 @@
                         <tr>
                             {% for x in deleted %}
                             <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.category_name}}</td>
+                            <td>{{x.description}}</td>
                             <td>{{x.deleted_by.username}}</td>
 
                             

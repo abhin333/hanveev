@@ -6,10 +6,10 @@ urlpatterns=[
     path('',views.index),
     #abi--------------------------------------------------
     path('about/',views.about),
-    path('news/',views.about),
-    path('career_reg/',views.career_reg),
+    # path('news/',views.about),
+    path('career_view/',views.career_view),
     path('contact/',views.contact),
-    path('tender/',views.tender),
+    path('tender_view/',views.tender_view),
     path('ga/',views.ga),
     
     #----------------------------------------------
@@ -18,14 +18,14 @@ urlpatterns=[
       path('homepage/', views.homepage),
     path('admin_login/', views.admin_login),
     path('admin_logout/', views.admin_logout),
-    path('brands/', views.brands),
-    path('user/', views.user),
-    path('category/', views.category),
-    path('products/', views.products),
-    path('gallery/', views.gallery),
-    path('contactus/', views.contactus),
-    path('getprice/', views.getprice),
-    path('newsletter/',views.newsletter),
+    path('tender_reg/',views.tender_reg),
+    path('tender_delete/',views.tender_delete),
+    path('tender_update/',views.tender_update),
+    path('career_reg/',views.career_reg),
+    path('career_delete/',views.career_delete),
+    path('career_update/',views.career_update),
+    path('news/', views.news), 
+    path('newsdelete/', views.newsdelete),
 
     #vishnu--------------------------
 ]

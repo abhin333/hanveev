@@ -1,42 +1,49 @@
 {% extends 'backend/base.html' %}
-{% load static %}
 {% block title %}
-<title>Brands</title>
+    <title>Tender Updation</title>
 {% endblock %}
-{% block content %}
+{% block content %} {% load static %}
  <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
                 aria-label="breadcrumb">
                 <ol class="breadcrumb" style="justify-content: flex-end;">
                     <li class="breadcrumb-item"><a href="/homepage/">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Brands</li>
+                    <li class="breadcrumb-item active" aria-current="page">Tender</li>
                 </ol>
             </nav>
             <div class="container input-container col-sm-8 col-12">
-                <h3>Brands</h3>
-                <!-- <form action="/brandupload/" method="post" enctype="multipart/form-data">
-   {% csrf_token %}
-   <input type="file" name="myfile">
-   <button type="submit">Upload</button>
- </form> -->
-                <form action="" method="POST" class="boot-form column">
+                <h3>Tender Updation</h3>{% for x in up%}
+                <form action="/tender_update/?id={{x.id}}" method="POST" enctype="multipart/form-data" class="boot-form column">
                     {% csrf_token %}
-                    {% if messages %}
-                    <div class="col-lg-12 color03 ">
-                        <!-- <ul class="messages align-content"> -->
-                            {% for message in messages %}
-                                <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-                            {% endfor %}
-                        <!-- </ul> -->
+                    
+<!--                    {{form.as_p}}-->
+                    <div class="row">
+                        <div class="form-group col-4 ml-2 product-price">
+                        <label for="price">Title</label>
+         <input type="text" class="form-control" id="title" name="title" value="{{x.title}}">
                     </div>
-                {% endif %}
-                    <div class="form-group">
-                        <label for="brandname">Brand Name</label>
-                        <input type="text" class="form-control" id="brandname" name="brandname">
+                        <div class="form-group col-4 product-price">
+                        <label for="priority">Last Date</label>
+                       <input type="date" class="form-control" id="lastdate" name="lastdate" onchange="datec()" value="{{x.last_date|date:'Y-m-d'}}">
                     </div>
+                    <div class="form-group col-4 upimg" style="display:none;">
+                        <label>File upload</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" accept=".pdf" id="timage" name="timage" disabled>
+                            <label class="custom-file-label" for="timage">Choose file</label>
+                          </div>
+                    </div>
+                    <div class="form-group col-4">
+                       
+                    {% if x.file %}<a href="{{x.file.url}}" target="_blank" id="currentimage" name="currentimage">View File</a>
+                    <label class="" for="currentimage">check to update file</label>{% else%}None{% endif%}
+                    <input type="hidden" name="imgup" id="imgup" class="chk" value="no">
+                    <input type="checkbox" name="imgup" id="imgup" class="chk" onchange="valueChanged()" value="yes">
+                       </div> </div>{% endfor %}
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
             <div class="container table-container col-12">
+
                 <h3>Table</h3>
                 <div class="export-btn-group row">
                     <button type="button" class="btn btn-primary export-btn mb-2" id="copy_btn">Copy</button>
@@ -44,83 +51,44 @@
                     <button type="button" class="btn btn-primary export-btn mb-2" onclick="tableToExcel('table', 'W3C Example Table')">EXCEL</button>
                     <button type="button" class="btn btn-primary export-btn mb-2" id="btnExport">PDF</button>
                     <button type="button" class="btn btn-primary export-btn mb-2" onclick="myApps.printTables()">PRINT</button>
-<form class="table-search">
+                    <form class="table-search">
                         <div class="input-group mb-2">
                           <div class="input-group-prepend">
-                            <!-- <span class="input-group-text table-Search-btn">Search</span> -->
                           </div>
-                          <!-- <input type="text" class="form-control"> -->
-                            <button type="button" class="btn btn-primary export-btn mb-2" data-toggle="modal" data-target="#exampleModal">Import</button>
-
                         </div>
                       </form>
-                </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Upload csv / xlsx File</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                            </button>
-                                </div>
-
-                           <!-- <form action="/brandupload/" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                       <div class="modal-body">
-    <input type="file" name="myfile" class="form-control" > -->
-
-                                </div>
-                            <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-
-                            </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
                 <div class="table-responsive" id="p">
                 <table class="table boot-table" id="table">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Si No</th>
-                            <th scope="col">Brands</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Last Date</th>
+                            <th scope="col">File</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            {% for x in query %}
+                            {% for x in query %}                            
                             <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.brand_name}}</td>
-                            <!-- <td>{{x.created_by.id}}</td> -->                            
-                            <td><a href="/brandupdate/?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                            <td><a href="/branddelete/?id={{x.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td>{{x.title}}</td>
+                            <td>{{x.last_date}}</td>
+                            <td>{% if x.file %}<a href="{{x.file.url}}" target="_blank">view</a>{% else%}None{% endif%}</td>
+                            <td><a href="/tender_update/?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                            <td><a href="/tender_delete/?id={{x.id}}"></i><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="11" class="text-center bg-warning">No Brand  created</td>
+                            <td colspan="11" class="text-center bg-warning">No Tender  created</td>
 
                         </tr>
-                            {% endfor %}
-                        <!-- <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr> -->
+                        {% endfor %}
                     </tbody>
                 </table>
-            </div>
+                </div>
         </div>  
                 {% if deleted %}                
                 <div class="container table-container col-12">
@@ -132,61 +100,83 @@
                     <button type="button" class="btn btn-primary export-btn mb-2" onclick="tableToExcels('tab', 'W3C Example Table')">EXCEL</button>
                     <button type="button" class="btn btn-primary export-btn mb-2" id="btnExports">PDF</button>
                     <button type="button" class="btn btn-primary export-btn mb-2" onclick="myApp.printTable()">PRINT</button>
-                    <!-- <form class="table-search">
-                        <div class="input-group mb-2">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text table-Search-btn">Search</span>
-                          </div>
-                          <input type="text" class="form-control">
-                        </div>
-                      </form> -->
                 </div>
                 <div class="table-responsive" id="ps">
                 <table class="table boot-table" id="tab">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Si No</th>
-                            <th scope="col">Brands</th>
-                            <th scope="col">Delete By</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Last Date</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody style="color: red">
                         <tr>
                             {% for x in deleted %}
                             <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.brand_name}}</td>
-                            <td>{{x.deleted_by.username}}</td>
-
-                            
-                            <!-- <td>{{x.created_by.id}}</td> -->                            
-                            <!-- <td><a href="{% url 'brandupdate' %}?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                            <td><a href="{% url 'branddelete' %}?id={{x.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td> -->
+                            <td>{{x.title}}</td>
+                            <td>{{x.last_date}}</td>
+                            <td>{% if x.file %}<a href="{{x.file.url}}" target="_blank">{% else%}None{% endif%}</td>
                         </tr>
                             {% endfor %}
-                        <!-- <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
-                            <td></i><i class="fa fa-trash" aria-hidden="true"></i></td>
-                        </tr> -->
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
                 {% else %}
                 {% endif %}
+                <script type="text/javascript">
+                    function datec()
+            {
+            var Gdate = document.getElementById("lastdate").value;
+            var CurrentDate = new Date();
+            Gdate = new Date(Gdate);
+            if(Gdate < CurrentDate)
+            {alert('please provide upcoming date'); 
+            $('submit').attr('disabled');   }
+            else
+            {
+                document.getElementById('submit').removeAttribute('disabled')
+            }
+    
+            }
+            </script>
+<script type="text/javascript">
 
-                <script>    
+                function valueChanged()
+        {
+            if($('.chk').is(":checked"))   
+              {  $(".upimg").show();
+              var s=document.getElementById('cj');
+              document.getElementById('timage').removeAttribute('disabled')
+        }
+            else
+               { $(".upimg").hide();
+               var p=document.getElementById('cj');
+               document.getElementById('timage').setAttribute("disabled","")
+               
+        }
+        }</script>
+                 <script>    
                 $(document).ready(function(){
                     $("li.custom-menu a.brands").addClass("active");
                     })
                 </script>
 
-                 <script>
+                <script>
+                // Add the following code if you want the name of the file appear on select
+                $(".custom-file-input").on("change", function() {
+                  var fileName = $(this).val().split("\\").pop();
+                  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                });
+                </script>
+
+                
+                <script>
                 var myApps = new function () {
                     this.printTables = function () {
                         var table = document.getElementById('table');
@@ -225,7 +215,7 @@
                             width: 500
                         }]
                     };
-                    pdfMake.createPdf(docDefinition).download("brands-details.pdf");
+                    pdfMake.createPdf(docDefinition).download("tender-details.pdf");
                 }
             });
         });
@@ -241,7 +231,7 @@
                             width: 500
                         }]
                     };
-                    pdfMake.createPdf(docDefinition).download("deleted-brands-details.pdf");
+                    pdfMake.createPdf(docDefinition).download("deleted-tender-details.pdf");
                 }
             });
         });
@@ -293,7 +283,7 @@ function export_table_to_csv(html, filename) {
 
 document.querySelector("#gg").addEventListener("click", function () {
     var html = document.querySelector("#table").outerHTML;
-    export_table_to_csv(html, "brands-details.csv");
+    export_table_to_csv(html, "tender-details.csv");
 });
 
                 </script>
@@ -343,7 +333,7 @@ function export_table_to_csvs(html, filename) {
 
 document.querySelector("#ggs").addEventListener("click", function () {
     var html = document.querySelector("#tab").outerHTML;
-    export_table_to_csvs(html, "deleted-brands-details.csv");
+    export_table_to_csvs(html, "deleted-tender-details.csv");
 });
 
                 </script>
@@ -420,4 +410,5 @@ copyBtns.addEventListener('click', function () {
                     $('#tab').DataTable();
                 } );
                 </script>
+
 {% endblock %}

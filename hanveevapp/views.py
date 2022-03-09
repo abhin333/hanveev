@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from hanveevapp.models import *
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
+from genericpath import exists
+import os
+
 
 
 # Create your views here.
@@ -13,29 +18,13 @@ def about(request):
 #abi--------------------------------------------------------------------
 
 	
-def career_reg(request):
-	if request.method=='POST':
-		opening_details=request.POST['opening_details']
-		last_date=request.POST['last_date']
-		file=request.FILE['file']
-		tb=careers_register(opening_details=opening_details,last_date=last_date,file=file)
-		tb.save()
-		return render(request,"career_reg.html")
-	else:
-		return render(request,"career_reg.html")
+def career_view(request):
+	tb=careers_register.objects.all()
+	return render(request,"frontend/career.html",{"career":tb})
 
-def tender(request):
-	if request.method=='POST':
-		title=request.POST['title']
-		last_date=request.POST['last_date']
-		file=request.FILE['file']
-		tb=tender_register(titile=title,last_date=last_date,file=file)
-		tb.save()
-		return render(request,"tender_reg.html")
-	else:
-		return render(request,"tender_reg.html")
-
-
+def tender_view(request):
+	tb=tender_register.objects.all()
+	return render(request,"frontend/tender.html",{"tender":tb})
 
 
 def contact(request):
@@ -87,33 +76,121 @@ def homepage(request):
     else:
         return render(request, 'backend/login.html',{'message':'please login'})
 
-def brands(request):
-	return render(request,'backend/brands.html')
 
-def user(request):
-	return render(request, 'backend/user.html')
-
-
-def category(request):
-	return render(request, 'backend/category.html')
-
-
-def products(request):
-	return render(request, 'backend/products.html')
-
-
-def gallery(request):
-	return render(request, 'backend/gallery.html')
+def tender_reg(request):
+	if request.method == 'POST':
+		title= request.POST['title']
+		lastdate= request.POST['lastdate']
+		timage = request.FILES['timage']
+		a=tender_register(title=title,last_date=lastdate,file=timage)
+		a.save()
+		return  HttpResponseRedirect('/tender_reg/')
+	else:
+		alll=tender_register.objects.all()
+		return render(request, 'backend/tender_reg.html',{'query':alll})
 
 
-def contactus(request):
-	return render(request, 'backend/contactus.html')
+def tender_delete(request):
+	if request.session.has_key('adm'):
+		tid= request.GET['id']
+		tender_register.objects.filter(id=tid).delete()
+		return  HttpResponseRedirect('/tender_reg/')
+	else:
+		return render(request, 'backend/login.html',{'message':'please login'})
+   
+def tender_update(request):
+	if request.method == 'POST':
+		tid= request.GET['id']
+		title= request.POST['title']
+		lastdate= request.POST['lastdate']
+		imgup = request.POST['imgup']
+		if (imgup == 'yes'):
+			image1 = request.FILES['timage']
+			oldrec = tender_register.objects.filter(id=tid)
+			updrec = tender_register.objects.get(id=tid)
+			for x in oldrec:
+				imgurl = x.file.url
+				pathtoimage = os.path.dirname(
+				os.path.dirname(os.path.abspath(__file__)))+imgurl
+				if os.path.exists(pathtoimage):
+					os.remove(pathtoimage)
+					print('Successfully deleted')
+					updrec.file = image1
+					updrec.save()
+		tender_register.objects.filter(id=tid).update(title=title,last_date=lastdate)    
+		return HttpResponseRedirect('/tender_reg/')    
+	else:
+		tid= request.GET['id']
+		current=tender_register.objects.filter(id=tid)
+		alll=tender_register.objects.all()
+		return render(request,'backend/tender_update.html',{'up':current,'query':alll})
 
 
-def getprice(request):
-	return render(request, 'backend/getprice.html')
+def career_reg(request):
+	if request.method == 'POST':
+		od= request.POST['openingdetails']
+		lastdate= request.POST['lastdate']
+		cimage = request.FILES['cimage']
+		a=careers_register(opening_details=od,last_date=lastdate,file=cimage)
+		a.save()
+		return  HttpResponseRedirect('/career_reg/')
+	else:
+		alll=careers_register.objects.all()
+		return render(request, 'backend/career_reg.html',{'query':alll})
 
-def newsletter(request):
-	return render(request, 'backend/newsletter.html')
+def career_delete(request):
+	if request.session.has_key('adm'):
+		cid= request.GET['id']
+		careers_register.objects.filter(id=cid).delete()
+		return  HttpResponseRedirect('/career_reg/')
+	else:
+		return render(request, 'backend/login.html',{'message':'please login'})
+
+
+def career_update(request):
+	if request.method == 'POST':
+		cid= request.GET['id']
+		openingdetails= request.POST['openingdetails']
+		lastdate= request.POST['lastdate']
+		imgup = request.POST['imgup']
+		if (imgup == 'yes'):
+			image1 = request.FILES['cimage']
+			oldrec = tender_register.objects.filter(id=cid)
+			updrec = tender_register.objects.get(id=cid)
+			for x in oldrec:
+				imgurl = x.file.url
+				pathtoimage = os.path.dirname(
+				os.path.dirname(os.path.abspath(__file__)))+imgurl
+				if os.path.exists(pathtoimage):
+					os.remove(pathtoimage)
+					print('Successfully deleted')
+					updrec.file = image1
+					updrec.save()
+		careers_register.objects.filter(id=cid).update(opening_details=openingdetails,last_date=lastdate)    
+		return HttpResponseRedirect('/career_reg/')    
+	else:
+		cid= request.GET['id']
+		current=careers_register.objects.filter(id=cid)
+		alll=careers_register.objects.all()
+		return render(request,'backend/career_update.html',{'up':current,'query':alll})
+
+def news(request):
+	if request.method == 'POST':
+		newnews= request.POST['addnews']
+		a=news_lines(description=newnews)
+		a.save()
+		return HttpResponseRedirect('/news/')
+	else:
+		alll=news_lines.objects.all()
+		return render(request, 'backend/news.html',{'query':alll})
+
+
+def newsdelete(request):
+	if request.session.has_key('adm'):
+		nid= request.GET['id']
+		news_lines.objects.filter(id=nid).delete()
+		return HttpResponseRedirect('/news')
+	else:
+		return render(request, 'backend/login.html',{'message':'please login'})
 
 #vishnu------------------------------------------------

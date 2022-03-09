@@ -1,112 +1,40 @@
 {% extends 'backend/base.html' %}
 {% block title %}
-    <title>Products</title>
+    <title>Careers Registration</title>
 {% endblock %}
 {% block content %} {% load static %}
  <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
                 aria-label="breadcrumb">
                 <ol class="breadcrumb" style="justify-content: flex-end;">
                     <li class="breadcrumb-item"><a href="/homepage/">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Products</li>
+                    <li class="breadcrumb-item active" aria-current="page">Careers</li>
                 </ol>
             </nav>
             <div class="container input-container col-sm-8 col-12">
-                <h3>Products</h3>
-                <form action="" method="POST" enctype="multipart/form-data" class="boot-form column">
+                <h3>Careers Registration</h3>
+                <form action="/career_reg/" method="POST" enctype="multipart/form-data" class="boot-form column">
                     {% csrf_token %}
-                    {% if messages %}
-                    <div class="col-lg-12 color03 ">
-                        <!-- <ul class="messages align-content"> -->
-                            {% for message in messages %}
-                                <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-                            {% endfor %}
-                        <!-- </ul> -->
-                    </div>
-                {% endif %}
+                    
 <!--                    {{form.as_p}}-->
-                <div class="row">
-                    <div class="form-group col-4" >
-                        <label for="name">Product Name</label>
-<!--                        <input type="text" class="form-control" id="name" name="productname">-->
-                        {{form.product_name}}
-                        <p  style="color: red;">{{form.product_name.errors.as_text}}</p>
-
-                    </div>
-                    <div class="form-group col-4">
-                        <label>Category</label>
-                        {{form.category}}
-
-                    </div>
-                    <div class="form-group col-4">
-                        <label>Brands</label>
-                        {{form.brand}}
-
-                    </div>
-                    </div>
                     <div class="row">
+                        <div class="form-group col-6 ml-2 product-price">
+                        <label for="price">Opening Details</label>
+         <input type="text" class="form-control" id="openingdetails" name="openingdetails">
+                    </div>
+                        <div class="form-group col-6 ml-2 pt-2 product-price">
+                        <label for="priority">Last Date</lab>
+                       <input type="date" class="form-control" id="lastdate" name="lastdate" onchange="datec()">
+                    </div>
+                
 
-                    <div class="form-group col-4">
-                        <label>Product Image (370*270)</label>
+                    <div class="form-group pb-2 col-4">
+                        <label>File upload</label>
                         <div class="custom-file">
-<!--{{form.product_image.url}}-->
-                            <input type="file" class="custom-file-input" id="id_product_image"  name="product_image" >
-                            <label class="custom-file-label" for="id_product_image">Choose file</label>
-                          </div>
-                    </div>
-                        <div class="form-group col-4 product-price">
-                        <label for="price">Price</label>
-                        {{form.price}}
-<!--                        <input type="text" class="form-control" id="price" name="price">-->
-                    </div>
-                        <div class="form-group col-4 product-price">
-                        <label for="priority">Product Priority</label>
-                        {{form.product_priority}}
-<!--                        <input type="text" class="form-control" id="priority" name="productpriority">-->
-                    </div>
-                    <div class="form-group col-4">
-                        <label>Product Thumbnail 1 (170*180)</label>
-                        <div class="custom-file">
-<!--{{form.product_image.url}}-->
-                            <input type="file" class="custom-file-input" id="id_product_image1" name="product_image1" >
-                            <label class="custom-file-label" for="id_product_image1">Choose file</label>
-                          </div>
-                    </div>
-                    <div class="form-group col-4">
-                        <label>Product Thumbnail 2 (170*180)</label>
-                        <div class="custom-file">
-<!--{{form.product_image.url}}-->
-                            <input type="file" class="custom-file-input" id="id_product_image2" name="product_image2" >
-                            <label class="custom-file-label" for="id_product_image2">Choose file</label>
-                          </div>
-                    </div>
-                    <div class="form-group col-4">
-                        <label>Product Thumbnail 3 (170*180)</label>
-                        <div class="custom-file">
-<!--{{form.product_image.url}}-->
-                            <input type="file" class="custom-file-input" id="id_product_image3" name="product_image3" >
-                            <label class="custom-file-label" for="id_product_image3">Choose file</label>
+                            <input type="file" class="custom-file-input" id="cimage" name="cimage" >
+                            <label class="custom-file-label" for="cimage">Choose file</label>
                           </div>
                     </div>
                         </div>
-                        <div class="form-group row col-12">
-                        <label>Product Main Image (505*584)</label>
-                        <div class="custom-file">
-<!--{{form.product_image.url}}-->
-                            <input type="file" class="custom-file-input" id="id_product_image4" name="product_image_main">
-                            <label class="custom-file-label" for="id_product_image4">Choose file</label>
-                          </div>
-                    </div>
-                    <div class="form-group row col-12">
-                        <label for="exampleFormControlTextarea1">Product Description</label>
-                        {{form.product_description}}
-<!--                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" name="productdescription"></textarea>-->
-                      </div>
-
-                      <div class="form-group">
-                        <label for="details">Product Details</label>
-                          {{form.product_details}}
-<!--                        <input type="text" class="form-control" id="details" name="productdetails">-->
-                    </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -152,7 +80,7 @@
                                    <form action="/productupload/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
                                        <div class="modal-body">
-    <input type="file" name="myfile" class="form-control" >
+                                           <input type="file" name="myfile" class="form-control" >
 
                                 </div>
                             <div class="modal-footer">
@@ -170,14 +98,9 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Si No</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Brands</th>
-                            <th scope="col">Product Image</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Product Description</th>
-                            <th scope="col">Product Details</th>
-                            <th scope="col">Product Priority</th>
+                            <th scope="col">Opening Details</th>
+                            <th scope="col">Last Date</th>
+                            <th scope="col">File</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -186,20 +109,15 @@
                         <tr>
                             {% for x in query %}                            
                             <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.product_name}}</td>
-                            <td>{{x.category.category_name}}</td>
-                            <td>{{x.brand.brand_name}}</td>
-                            <td>{% if x.product_image %}<img src="{{x.product_image.url}}" width="25px" height="25px">{% else%}None{% endif%}</td>
-                            <td>{{x.price}}</td>
-                            <td>{{x.product_description}}</td>
-                            <td>{{x.product_details}}</td>
-                            <td>{{x.product_priority}}</td>
-                            <td><a href="{% url 'productsupdate' %}?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                            <td><a href="{% url 'productsdelete' %}?id={{x.id}}"></i><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td>{{x.opening_details}}</td>
+                            <td>{{x.last_date}}</td>
+                            <td>{% if x.file %}<a href="{{x.file.url}}" target="_blank">view</a>{% else%}None{% endif%}</td>
+                            <td><a href="/career_update/?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                            <td><a href="/career_delete/?id={{x.id}}"></i><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="11" class="text-center bg-warning">No Product  created</td>
+                            <td colspan="11" class="text-center bg-warning">No Careers created</td>
 
                         </tr>
                         {% endfor %}
@@ -223,31 +141,20 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Si No</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Brands</th>
-                            <th scope="col">Product Image</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Product Description</th>
-                            <th scope="col">Product Details</th>
-                            <th scope="col">Product Priority</th>
-                            <th scope="col">Delete By</th>
+                            <th scope="col">Opening Details</th>
+                            <th scope="col">Last Date</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody style="color: red">
                         <tr>
                             {% for x in deleted %}
                             <td scope="row">{{ forloop.counter }}</td>
-                            <td>{{x.product_name}}</td>
-                            <td>{{x.category.category_name}}</td>
-                            <td>{{x.brand.brand_name}}</td>
-                            <td><img src="{{x.product_image.url}}" width="25px" height="25px"></td>
-                            <td>{{x.price}}</td>
-                            <td>{{x.product_description}}</td>
-                            <td>{{x.product_details}}</td>
-                            <td>{{x.product_priority}}</td>
-                            <td>{{x.deleted_by.username}}</td>
-
+                            <td>{{x.opening_details}}</td>
+                            <td>{{x.last_date}}</td>
+                            <td>{% if x.file %}<a href="{{x.file.url}}" target="_blank">view</a>{% else%}None{% endif%}</td>
                             
                             <!-- <td>{{x.created_by.id}}</td> -->                            
 <!--                            <td><a href="{% url 'productsupdate' %}?id={{x.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>-->
@@ -273,6 +180,23 @@
     </div>
                 {% else %}
                 {% endif %}
+                <script type="text/javascript">
+                    function datec()
+            {
+            var Gdate = document.getElementById("lastdate").value;
+            var CurrentDate = new Date();
+            Gdate = new Date(Gdate);
+            if(Gdate < CurrentDate)
+            {alert('please provide upcoming date'); 
+            $('submit').attr('disabled');   }
+            else
+            {
+                document.getElementById('submit').removeAttribute('disabled')
+            }
+    
+            }
+            </script>
+
 
                  <script>    
                 $(document).ready(function(){
@@ -328,7 +252,7 @@
                             width: 500
                         }]
                     };
-                    pdfMake.createPdf(docDefinition).download("products-details.pdf");
+                    pdfMake.createPdf(docDefinition).download("career-details.pdf");
                 }
             });
         });
@@ -344,7 +268,7 @@
                             width: 500
                         }]
                     };
-                    pdfMake.createPdf(docDefinition).download("deleted-products-details.pdf");
+                    pdfMake.createPdf(docDefinition).download("deleted-career-details.pdf");
                 }
             });
         });
@@ -396,7 +320,7 @@ function export_table_to_csv(html, filename) {
 
 document.querySelector("#gg").addEventListener("click", function () {
     var html = document.querySelector("#table").outerHTML;
-    export_table_to_csv(html, "products-details.csv");
+    export_table_to_csv(html, "career-details.csv");
 });
 
                 </script>
@@ -446,7 +370,7 @@ function export_table_to_csvs(html, filename) {
 
 document.querySelector("#ggs").addEventListener("click", function () {
     var html = document.querySelector("#tab").outerHTML;
-    export_table_to_csvs(html, "deleted-products-details.csv");
+    export_table_to_csvs(html, "deleted-career-details.csv");
 });
 
                 </script>
