@@ -29,6 +29,32 @@
         new google.translate.TranslateElement({pageLanguage: "en", includedLanguages : 'hi,ml,en'}, 'google_translate_element');
       }
     </script>
+    <style>
+   body {
+top: 0px !important; 
+}
+
+.goog-logo-link {
+    display:none !important;
+} 
+    
+.goog-te-gadget {
+    color: transparent !important;
+    font-size: 0;
+}
+
+.goog-te-banner-frame.skiptranslate {
+display: none !important;}
+
+
+html[lang="ml"] div.col.header-menu-column.menu-color-black.pe-5 > div > nav > div > ul > li > a {
+  font-size: 13px;
+}
+
+
+
+
+</style>
 </head>
 
 
@@ -62,35 +88,22 @@
                         <div class="top-bar-right text-end">
                             <div class="ltn__top-bar-menu">
                                 <ul>
-<style>
-   body {
-top: 0px !important; 
-}
 
-.goog-logo-link {
-    display:none !important;
-} 
-    
-.goog-te-gadget {
-    color: transparent !important;
-    font-size: 0;
-}
+                                 
 
-.goog-te-banner-frame.skiptranslate {
-display: none !important;
-} 
-
-
-</style>
                                     <li>
                                         <!-- ltn__language-menu -->
-                                        <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
-                                            <ul>
-                                                
-<div id="google_translate_element" ></div>
-<li></li>
+                                        <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu" >
+                                            <div id="google_translate_element" ></div>
+                                            <!-- <ul>
+                                                <li><a href="#" class="dropdown-toggle" ><span class="active-currency" >English</span></a>
+                                                    <ul>
+                                                        <li><a href="#">English</a></li>
+                                                        <li><a href="#">Malayalam</a></li>
+                                                        <li><a href="#">Hindi</a></li>
+                                                    </ul>
                                                 </li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                     </li>
                                     <li>
@@ -145,10 +158,10 @@ display: none !important;
                             <nav>
                                 <div class="ltn__main-menu">
                                     <ul>
-                                        <li class="menu-icon"><a class="active" href="/">Home</a>
+                                        <li><a class="active " href="/">Home</a>
                                            
                                         </li>
-                                        <li class="menu-icon "><a href="#">Product</a>
+                                        <li><a href="#">Product</a>
                                             <ul>
                                                 <li><a href="#">Classical Handloom</a></li>
                                                 <li><a href="#">Home Furnishing</a></li>
@@ -157,7 +170,7 @@ display: none !important;
                                                 
                                             </ul>
                                         </li>
-                                        <li class="menu-icon"><a href="#">About</a>
+                                        <li><a href="#">About</a>
                                             <ul>
                                                 <li><a href="/about/">About Us</a></li>
                                                 
@@ -165,15 +178,14 @@ display: none !important;
                                                 
                                             </ul>
                                         </li>
-                                        <li class="menu-icon"><a href="#">Offices</a></li>
-                                        <li class="menu-icon"><a href="/ga/">Gallery</a></li>
-
-                                        <li class="menu-icon"><a href="#">RTI</a></li>
-                                        <li class="menu-icon"><a href="/tender_view/">Tenders</a></li>
-                                        <li class="menu-icon"><a href="/career_view/">Careers</a></li>
-
+                                        <li><a href="/ga/">Gallery</a></li>
+                                        <li><a href="#">Offices</a></li>
+                            
+                                        <li><a href="#">RTI</a></li>
+                                        <li><a href="/tender_view/">Tenders</a></li>
+                                        <li><a href="/career_view/">Careers</a></li>
                                        
-                                        <li class="menu-icon"><a href="/contact/">Contact</a></li>
+                                        <li><a href="/contact/">Contact</a></li>
                                         <!-- <li class="special-link">
                                             <a href="add-listing.html">Add Listing</a>
                                         </li> -->

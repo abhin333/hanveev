@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from genericpath import exists
-import os
+import os,datetime
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 
@@ -28,7 +30,23 @@ def tender_view(request):
 
 
 def contact(request):
-	return render(request,"frontend/contact.html")
+	if request.method =='POST':
+		name=request.POST['name']
+		email=request.POST['email']
+		phone=request.POST['phone']
+		subject=request.POST['subject']
+		message=request.POST['message']
+		date= datetime.datetime.now().date()
+		usermessage = f'Hi {name}, thank you for getting  in touch with us '
+		adminmessage= f'message from {name}'+'        '+message
+		nsub=f'new messge --[{subject}]'
+		con=contact_us(name=name,email=email,phone=phone,subject=subject,message=message,date=date)
+		con.save()
+		mail_sender( "message recieved", usermessage,email)
+		mail_sender(nsub,adminmessage,"tindertapp@gmail.com")
+		return render(request,"frontend/contact.html")
+	else:
+		return render(request,"frontend/contact.html")
 
 
 def ga(request):
@@ -193,4 +211,9 @@ def newsdelete(request):
 	else:
 		return render(request, 'backend/login.html',{'message':'please login'})
 
+
+def mail_sender(subject,message, recipient):
+	email_from =  settings.EMAIL_HOST_USER 
+	recipient_list = [recipient, ] 
+	send_mail( subject, message, email_from, recipient_list )
 #vishnu------------------------------------------------
